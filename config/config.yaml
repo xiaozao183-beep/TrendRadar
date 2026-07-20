@@ -66,39 +66,31 @@ platforms:
   api_url: ""                            # 热榜数据 API 地址（留空使用默认地址）
                                         # 如果你自行部署了 newsnow，填入你的地址，如: https://your-domain.com/api/s
   sources:
-    - id: "toutiao"
-      name: "今日头条"
-      expected_domain: "toutiao.com"
-    - id: "baidu"
-      name: "百度热搜"
-      expected_domain: "baidu.com"
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com"
-    - id: "thepaper"
-      name: "澎湃新闻"
-      expected_domain: "thepaper.cn"
-    - id: "bilibili-hot-search"
-      name: "bilibili 热搜"
-      expected_domain: "bilibili.com"
+      expected_domain: "wallstreetcn.com" # 核心价值：全球与国内顶级商业宏观、车企财报深度剖析、大模型独角兽估值跟踪。
+    
     - id: "cls-hot"
       name: "财联社热门"
-      expected_domain: "cls.cn"
-    - id: "ifeng"
-      name: "凤凰网"
-      expected_domain: "ifeng.com"
-    - id: "tieba"
-      name: "贴吧"
-      expected_domain: "baidu.com"
-    - id: "weibo"
-      name: "微博"
-      expected_domain: "weibo.com"
-    - id: "douyin"
-      name: "抖音"
-      expected_domain: "douyin.com"
+      expected_domain: "cls.cn"           # 核心价值：A股及产业链一线情报，车企价格战、供应链断供/爆单、国家政策补贴第一手消息。
+    
     - id: "zhihu"
-      name: "知乎"
-      expected_domain: "zhihu.com"
+      name: "知乎热榜"
+      expected_domain: "zhihu.com"        # 核心价值：科技与汽车底层技术拆解集中地，常有行业内技术专家匿名爆料车企内幕与技术前景。
+    
+    - id: "36kr"
+      name: "36氪热榜"
+      expected_domain: "36kr.com"         # 核心价值：国内一级市场风向标，追踪“AI+制造”融资、独立创客出海变现案例、大模型落地痛点。
+
+    - id: "huxiu"
+      name: "虎嗅网"
+      expected_domain: "huxiu.com"        # 核心价值：深度商业评论，各车企战略转型得失、智能底盘/线控转向商业化进程的万字调研长文。
+
+    - id: "thepaper"
+      name: "澎湃新闻"
+      expected_domain: "thepaper.cn"       # 核心价值：权威政经新闻，直接拉取国家发改委、工信部关于“新质生产力”与“人工智能+”的政策红利解读。
+
+
 
 
 
@@ -127,20 +119,17 @@ rss:
   # - 正整数：覆盖全局设置，只推送此天数内的文章
   # - 0：禁用此频道的新鲜度过滤，推送所有文章
   feeds:
+    - id: "sspai"
+      name: "少数派"
+      url: "https://sspai.com/feed"       # 【安全验证】少数派官方全量源。核心价值：独立开发者、AI小工具变现、副业实操方案密集地。
+
+    - id: "ifanr"
+      name: "爱范儿"
+      url: "https://www.ifanr.com/feed"   # 【安全验证】爱范儿官方源。核心价值：聚焦数字化转型、大模型商业落地应用、智能汽车行业动态。
+
     - id: "hacker-news"
       name: "Hacker News"
-      url: "https://hnrss.org/frontpage"
-
-    - id: "ruanyifeng"
-      name: "阮一峰的网络日志"
-      url: "http://www.ruanyifeng.com/blog/atom.xml"
-      enabled: false                  # 禁用
-      # max_age_days: 3               # 示例：推送 3 天内的文章（更新较慢的博客）
-     
-    - id: "yahoo-finance"
-      name: "雅虎财经"
-      url: "https://finance.yahoo.com/news/rssindex"
-
+      url: "https://hnrss.org/frontpage"  # 【安全验证】全球顶级程序员社区高安全性源。核心价值：独立开发搞钱灵感，配合你的 AI 翻译功能阅读。
     # 自定义源示例
     # - id: "custom-feed"
     #   name: "自定义源"
