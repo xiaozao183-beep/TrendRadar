@@ -138,7 +138,7 @@ storage:
 # ===============================================================
 ai:
   model: "deepseek/deepseek-v4-flash"    
-  api_key: "sk-****请填回你自己的KEY****"    # 出于安全考虑已为你隐去
+  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5"    # 出于安全考虑已为你隐去
   api_base: ""
   timeout: 120
   temperature: 0.5                        # 【调低温度至 0.5】约束 AI 的发散性，强迫其输出结构化、事实性强、逻辑严密的商业提炼
