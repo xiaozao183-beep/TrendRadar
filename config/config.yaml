@@ -17,17 +17,9 @@ platforms:
   enabled: true
   api_url: "" 
   sources:
-    - id: "36kr"
-      name: "36氪热榜"
-      # expected_domain: "36kr.com"       # 【核心保障】注销强域名校验，确保转链和API防盗链机制下仍能100%稳定拉取创投和AI深度分析
-      
-    - id: "huxiu"
-      name: "虎嗅网"
-      # expected_domain: "huxiu.com"      # 注销强校验，聚焦前沿科技商业化、AI 行业大视野与落地困境分析
-
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com" # 追踪 AI 独角兽估值、半导体供应链宏观资本动向
+      expected_domain: "wallstreetcn.com"
 
     - id: "zhihu"
       name: "知乎热榜"
@@ -59,7 +51,14 @@ rss:
     - id: "sspai"
       name: "少数派"
       url: "https://sspai.com/feed"         # 关注 AI 效率工具、独立开发者的轻量级变现与提效经验分享
-
+      
+    - id: "36kr-rss"
+      name: "36氪资讯"
+      url: "https://36kr.com/feed"          # 36氪官方 RSS
+      
+    - id: "huxiu-rss"
+      name: "虎嗅资讯"
+      url: "https://rsshub.app/huxiu/article" # 虎嗅的文章源 (若官方失效可使用此 RSSHub 节点)
     # --- 全球顶级科技与核心技术前沿 (40% 海外权重，原生直连) ---
     - id: "techcrunch"
       name: "TechCrunch Startups/AI"
