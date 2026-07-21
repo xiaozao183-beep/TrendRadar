@@ -7,7 +7,7 @@ ai_analysis:
   enabled: true
   provider: "openai"              # 使用 DeepSeek 或 OpenAI 兼容接口
   model: "deepseek-chat"          # 可更换为你使用的模型名称
-  api_key: "YOUR_API_KEY_HERE"    # 请替换为你的 API Key (注意不要包含中文引号)
+  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5"    # 请替换为你的 API Key (注意不要包含中文引号)
   api_base: "https://api.deepseek.com/v1"
   language: "zh-CN"
   include_rss: true              # 必须开启：AI 将深度分析 RSS 干货
