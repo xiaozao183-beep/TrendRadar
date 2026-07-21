@@ -1,11 +1,8 @@
 # ===============================================================
-# TrendRadar 配置文件 (AI提效与实操变现定制版)
-# ===============================================================
-# ===============================================================
-# TrendRadar 配置文件 (硬核 AI 提效与实事求是变现版)
+# TrendRadar 配置文件 (防卡死 & Debug 排查版)
 # ===============================================================
 
-# --- 1. 数据源 - 平台热榜 (仅保留高信噪比源) ---
+# --- 1. 数据源 - 平台热榜 ---
 platforms:
   enabled: true
   sources:
@@ -13,15 +10,14 @@ platforms:
       name: "华尔街见闻"
       expected_domain: "wallstreetcn.com"
 
-# --- 2. RSS 精准订阅源 (聚焦：AI提效、工作流、独立开发、真实接单/变现) ---
+# --- 2. RSS 精准订阅源 (仅保留国内直连极快源，防止网络卡死) ---
 rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 3              # 过滤 3 天内的最新干货
+    max_age_days: 3
 
   feeds:
-    # --- 【AI 工作流 & 提效工具类】---
     - id: "sspai"
       name: "少数派"
       url: "https://sspai.com/feed"
@@ -30,25 +26,7 @@ rss:
       name: "机器之心"
       url: "https://www.jiqizhixin.com/rss"
 
-    # --- 【独立开发、程序员真实副业/接单与变现讨论】---
-    - id: "v2ex-creative"
-      name: "V2EX-创意与独立开发"
-      url: "https://rsshub.app/v2ex/tab/creative"
-
-    - id: "v2ex-tech"
-      name: "V2EX-技术与AI"
-      url: "https://rsshub.app/v2ex/tab/tech"
-
-    # --- 【全球开源项目与商业化弱信号】---
-    - id: "github-trending"
-      name: "GitHub Trending"
-      url: "https://rsshub.app/github/trending/daily/any"
-
-    - id: "hacker-news-ai"
-      name: "Hacker News (AI)"
-      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent"
-
-# --- 3. 强制关键词过滤 (过滤吃瓜新闻，只留硬核提效与变现) ---
+# --- 3. 强制关键词过滤 ---
 report:
   mode: "current"
   display_mode: "keyword"
@@ -61,27 +39,18 @@ report:
     - "Dify"
     - "Coze"
     - "RAG"
-    - "知识库"
-    - "自动化"
-    - "Copilot"
     - "代码"
     - "Prompt"
-    - "脚本"
     - "变现"
     - "副业"
     - "独立开发"
-    - "接单"
     - "工具"
-    - "商业化"
-    - "付费"
-    - "案例"
-    - "赚钱"
     - "开源"
 
 # --- 4. 推送与区域控制 ---
 display:
   region_order:
-    - ai_analysis                 # 将 AI 深度分析置顶展示
+    - ai_analysis
     - rss
     - hotlist
 
@@ -89,25 +58,25 @@ display:
     hotlist: true
     new_items: false
     rss: true
-    standalone: false             # 关闭独立展示区，防止页面冗余
+    standalone: false
     ai_analysis: true
-    
-# --- 5. AI 模型与分析统一配置 ---
+
+# --- 5. AI 模型统一配置 (缩短超时，防死等) ---
 ai:
   provider: "openai"
-  model: "deepseek-chat"          # DeepSeek 官方标准模型
-  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5" # 请粘贴你的 DeepSeek API Key
+  model: "deepseek-chat"
+  api_key: "sk-fb91bc27e6d0416da0ffba18fbc6699d"  # ⚠️ 必须替换为你真实的 sk-xxxx 密钥
   api_base: "https://api.deepseek.com/v1"
-  timeout: 120
-  temperature: 0.3                # 调低温度，强迫 AI 实事求是、拒绝空谈
-  max_tokens: 4000
+  timeout: 30                     # 缩短 AI 超时时间至 30 秒
+  temperature: 0.3
+  max_tokens: 3000
 
 ai_analysis:
   enabled: true
   language: "Chinese"
   prompt_file: "ai_analysis_prompt.txt"
   mode: "follow_report"
-  max_news_for_analysis: 100
+  max_news_for_analysis: 50
   include_rss: true
   include_standalone: false
   include_rank_timeline: false
@@ -127,9 +96,10 @@ storage:
     retention_days: 0
 
 advanced:
-  debug: false
+  debug: true                     # ⚠️ 开启 DEBUG 模式！终端会显示具体卡在哪个环节
   crawler:
-    request_interval: 2000
+    request_interval: 1000
   rss:
     request_interval: 1000
-    timeout: 15
+    timeout: 5                    # ⚠️ RSS 单个源超时限制降为 5 秒，防止一直卡住
+    use_proxy: false
