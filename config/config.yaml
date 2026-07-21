@@ -1,27 +1,19 @@
 # ===============================================================
 # TrendRadar 配置文件 (AI提效与实操变现定制版)
 # ===============================================================
+# ===============================================================
+# TrendRadar 配置文件 (硬核 AI 提效与实事求是变现版)
+# ===============================================================
 
-# --- 1. AI 分析模型配置 ---
-ai_analysis:
-  enabled: true
-  provider: "openai"              # 使用 DeepSeek 或 OpenAI 兼容接口
-  model: "deepseek-chat"          # 可更换为你使用的模型名称
-  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5"    # 请替换为你的 API Key (注意不要包含中文引号)
-  api_base: "https://api.deepseek.com/v1"
-  language: "zh-CN"
-  include_rss: true              # 必须开启：AI 将深度分析 RSS 干货
-  include_standalone: false       # 关闭独立展示区，减少不必要的 token 消耗与噪声
-
-# --- 2. 平台热榜数据源 (仅保留高信噪比商业/科技源) ---
+# --- 1. 数据源 - 平台热榜 (仅保留高信噪比源) ---
 platforms:
   enabled: true
   sources:
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com" # 用于观察 AI 产业资本与商业化落地方向
+      expected_domain: "wallstreetcn.com"
 
-# --- 3. RSS 精准订阅源 (聚焦：AI提效、工作流、独立开发、赚钱案例) ---
+# --- 2. RSS 精准订阅源 (聚焦：AI提效、工作流、独立开发、真实接单/变现) ---
 rss:
   enabled: true
   freshness_filter:
@@ -32,39 +24,40 @@ rss:
     # --- 【AI 工作流 & 提效工具类】---
     - id: "sspai"
       name: "少数派"
-      url: "https://sspai.com/feed" # 专注于 AI 效率工具、工作流（Dify/Coze/Prompt）搭建实操
+      url: "https://sspai.com/feed"
 
     - id: "jiqizhixin"
       name: "机器之心"
-      url: "https://www.jiqizhixin.com/rss" # 最新 AI 工具、开源代码与工程落地
+      url: "https://www.jiqizhixin.com/rss"
 
-    # --- 【独立开发、副业接单与变现讨论】---
+    # --- 【独立开发、程序员真实副业/接单与变现讨论】---
     - id: "v2ex-creative"
       name: "V2EX-创意与独立开发"
-      url: "https://rsshub.app/v2ex/tab/creative" # 程序员分享自己做的小工具、AI变现尝试与接单案例
+      url: "https://rsshub.app/v2ex/tab/creative"
 
     - id: "v2ex-tech"
       name: "V2EX-技术与AI"
-      url: "https://rsshub.app/v2ex/tab/tech" # 真实开发者的 AI 提效工具踩坑与实战经验
+      url: "https://rsshub.app/v2ex/tab/tech"
 
-    # --- 【全球 AI 开源项目与商业化弱信号】---
+    # --- 【全球开源项目与商业化弱信号】---
     - id: "github-trending"
       name: "GitHub Trending"
-      url: "https://rsshub.app/github/trending/daily/any" # 全球开发者正在做的 AI 微型工具/轮子
+      url: "https://rsshub.app/github/trending/daily/any"
 
     - id: "hacker-news-ai"
       name: "Hacker News (AI)"
-      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent" # 硅谷工程师关于 AI 自动化与商业化的实操讨论
+      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent"
 
-# --- 4. 强制关键词过滤 (过滤一切吃瓜新闻，只留硬核干货) ---
+# --- 3. 强制关键词过滤 (过滤吃瓜新闻，只留硬核提效与变现) ---
 report:
   mode: "current"
-  display_mode: "keyword"         # 开启关键词匹配模式
+  display_mode: "keyword"
   keywords:
-    # 维度 A：AI 提效与工程实操
+    - "AI"
+    - "LLM"
+    - "Agent"
     - "提效"
     - "工作流"
-    - "Agent"
     - "Dify"
     - "Coze"
     - "RAG"
@@ -74,8 +67,6 @@ report:
     - "代码"
     - "Prompt"
     - "脚本"
-    
-    # 维度 B：AI 落地变现与商业机会
     - "变现"
     - "副业"
     - "独立开发"
@@ -85,46 +76,45 @@ report:
     - "付费"
     - "案例"
     - "赚钱"
-    - "开源项目"
+    - "开源"
 
-
-
-# ===============================================================
-# 5. 推送区域控制
-# ===============================================================
+# --- 4. 推送与区域控制 ---
 display:
   region_order:
-    - ai_analysis                         # 将 AI 深度商业分析总结置顶，先看大盘结论
-    - standalone
+    - ai_analysis                 # 将 AI 深度分析置顶展示
     - rss
     - hotlist
-    - new_items
 
   regions:
     hotlist: true
     new_items: false
     rss: true
-    standalone: true                      # 开启独立展示区
-    ai_analysis: true                     
+    standalone: false             # 关闭独立展示区，防止页面冗余
+    ai_analysis: true
+    
+# --- 5. AI 模型与分析统一配置 ---
+ai:
+  provider: "openai"
+  model: "deepseek-chat"          # DeepSeek 官方标准模型
+  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5" # 请粘贴你的 DeepSeek API Key
+  api_base: "https://api.deepseek.com/v1"
+  timeout: 120
+  temperature: 0.3                # 调低温度，强迫 AI 实事求是、拒绝空谈
+  max_tokens: 4000
 
-  standalone:
-    platforms: ["zhihu"]                  
-    rss_feeds: ["a16z", "hacker-news", "jiqizhixin"] # 让最顶级的商业洞察和硬核技术独立高亮展示
-    max_items: 10
-
-# ===============================================================
-# 6. 通知与存储设置 (保持不变)
-# ===============================================================
-notification:
+ai_analysis:
   enabled: true
-  channels:
-    feishu:
-      webhook_url: ""
-    dingtalk:
-      webhook_url: ""
-    wework:
-      webhook_url: ""
-      msg_type: "markdown"
+  language: "Chinese"
+  prompt_file: "ai_analysis_prompt.txt"
+  mode: "follow_report"
+  max_news_for_analysis: 100
+  include_rss: true
+  include_standalone: false
+  include_rank_timeline: false
+
+# --- 6. 通知与本地存储 ---
+notification:
+  enabled: false
 
 storage:
   backend: "auto"
@@ -136,45 +126,10 @@ storage:
     data_dir: "output"
     retention_days: 0
 
-# ===============================================================
-# 8. AI 模型与分析配置 (严谨、务实、直击痛点)
-# ===============================================================
-ai:
-  model: "deepseek/deepseek-v4-flash"    
-  api_key: "sk-df38fe5f8ccd4cb5802eff083de3fac5"    # 出于安全考虑已为你隐去
-  api_base: ""
-  timeout: 120
-  temperature: 0.5                        # 【调低温度至 0.5】约束 AI 的发散性，强迫其输出结构化、事实性强、逻辑严密的商业提炼
-  max_tokens: 5000
-
-ai_analysis:
-  enabled: true
-  language: "Chinese"
-  prompt_file: "ai_analysis_prompt.txt"   # 建议在此 Prompt 中要求 AI 必须输出：“技术难点”、“目标客群”与“可直接落地的副业/商业切入点”
-  mode: "follow_report"
-  max_news_for_analysis: 100              # 因为过滤极严，分析基数下调至 100 即可覆盖高分内容
-  include_rss: true                       
-  include_standalone: true
-  include_rank_timeline: false            
-
-ai_translation:
-  enabled: true                           # 自动无缝抹平语言壁垒，直接消化 A16Z 和 HackerNews 原生内容
-  language: "中文"
-  prompt_file: "ai_translation_prompt.txt"
-  batch_size: 100
-  batch_interval: 2
-  scope:
-    hotlist: false
-    rss: true
-    standalone: true
-
 advanced:
   debug: false
-  version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
   crawler:
     request_interval: 2000
-    use_proxy: false
   rss:
     request_interval: 1000
     timeout: 15
-    use_proxy: false
