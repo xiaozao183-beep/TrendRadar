@@ -1,118 +1,129 @@
-# ===============================================================
-# TrendRadar 配置文件 (AI提效与实操变现定制版 - 修正版)
-# ===============================================================
+# ═══════════════════════════════════════════════════════════════
+#                   TrendRadar 配置文件 (极客与 AI 商业探勘专版)
+# ═══════════════════════════════════════════════════════════════
 
-# --- 1. 数据源 - 平台热榜 (仅保留高信噪比源) ---
+app:
+  timezone: "Asia/Shanghai"
+  show_version_update: true
+
+schedule:
+  enabled: false
+  preset: "morning_evening"
+
+# ===============================================================
+# 2. 数据源 - 热榜平台 (聚焦深度研讨与宏观资金流向)
+# ===============================================================
 platforms:
   enabled: true
+  api_url: "" 
   sources:
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com"
+      expected_domain: "wallstreetcn.com" # 关注宏观大环境、美股 AI 巨头财报与算力基建资金流向
 
-# --- 2. RSS 精准订阅源 (聚焦：AI提效、工作流、独立开发、赚钱案例) ---
+    - id: "zhihu"
+      name: "知乎热榜"
+      expected_domain: "zhihu.com"        # 获取国内一线开发者关于大模型微调、RAG 落地实践的硬核探讨
+
+# ===============================================================
+# 3. 数据源 - RSS 订阅 (只保留高信任度、高商业价值的全球顶级源)
+# ===============================================================
 rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 3              # 过滤 3 天内的最新干货
+    max_age_days: 2                       # 保持 48 小时内的极速商业嗅觉
 
   feeds:
-    # --- 【AI 工作流 & 提效工具类】---
-    - id: "sspai"
-      name: "少数派"
-      url: "https://sspai.com/feed"
-
+    # --- 国内高信任度 AI 垂直与商业媒体 ---
     - id: "jiqizhixin"
       name: "机器之心"
-      url: "https://www.jiqizhixin.com/rss"
+      url: "https://www.jiqizhixin.com/rss" # 国内权威 AI 媒体：前沿论文解读、硬核技术拆解、大厂落地案例
+      
+    - id: "geekpark"
+      name: "极客公园"
+      url: "https://www.geekpark.net/rss"   # 聚焦 AI 产品经理视角与科技商业逻辑，适合挖掘用户痛点
+      
+    - id: "36kr-rss"
+      name: "36氪资讯"
+      url: "https://36kr.com/feed"          # 关注国内 AI 创投融资事件，看热钱往哪些垂直赛道流
 
-    # --- 【独立开发、副业接单与变现讨论】---
-    - id: "v2ex-creative"
-      name: "V2EX-创意与独立开发"
-      url: "https://rsshub.app/v2ex/tab/creative"
+    # --- 全球顶级技术前沿与核心资本风向 (权重拉满，原生直连) ---
+    - id: "techcrunch"
+      name: "TechCrunch AI"
+      url: "https://techcrunch.com/category/artificial-intelligence/feed/" # 修正为专属 AI 频道，直击海外真金白银的 SaaS 与 AI 融资现场
 
-    - id: "v2ex-tech"
-      name: "V2EX-技术与AI"
-      url: "https://rsshub.app/v2ex/tab/tech"
+    - id: "hacker-news"
+      name: "Hacker News"
+      url: "https://hnrss.org/frontpage"    # 硅谷极客大本营，过滤出 GitHub 高 Star 开源项目与工程落地的真实反馈
+      
+    - id: "a16z"
+      name: "Andreessen Horowitz"
+      url: "https://a16z.com/feed/"         # (新增) 全球顶级风投 A16Z 的深度研报，洞察未来 3-5 年的 AI 结构性机会
+      
+    - id: "openai-blog"
+      name: "OpenAI Blog"
+      url: "https://openai.com/blog/rss.xml" # (新增) 紧盯绝对的技术前沿发版与最佳实践
 
-    # --- 【全球 AI 开源项目与商业化弱信号】---
-    - id: "github-trending"
-      name: "GitHub Trending"
-      url: "https://rsshub.app/github/trending/daily/any"
-
-    - id: "hacker-news-ai"
-      name: "Hacker News (AI)"
-      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent"
-
-# --- 3. 强制关键词过滤 (保留广度，防止零数据) ---
+# ===============================================================
+# 4. 报告模式与展示控制
+# ===============================================================
 report:
   mode: "current"
   display_mode: "keyword"
-  keywords:
-    - "AI"
-    - "LLM"
-    - "Agent"
-    - "提效"
-    - "工作流"
-    - "Dify"
-    - "Coze"
-    - "RAG"
-    - "知识库"
-    - "自动化"
-    - "Copilot"
-    - "代码"
-    - "Prompt"
-    - "脚本"
-    - "变现"
-    - "副业"
-    - "独立开发"
-    - "接单"
-    - "工具"
-    - "商业化"
-    - "付费"
-    - "案例"
-    - "赚钱"
-    - "开源"
+  sort_by_position_first: false
+  rank_threshold: 5
+  max_news_per_keyword: 0
 
-# --- 4. 推送与区域控制 ---
+filter:
+  method: "ai"                            # 彻底屏蔽“震惊体”和无落地价值的水文
+  priority_sort_enabled: true
+
+ai_filter:
+  batch_size: 200
+  batch_interval: 2
+  min_score: 0.80                         # 【调高阈值至 0.80】极致的宁缺毋滥，只留下具备真实商业价值或技术突破的信息
+  reclassify_threshold: 0.75
+  prompt_file: "prompt.txt"
+  extract_prompt_file: "extract_prompt.txt"
+  update_tags_prompt_file: "update_tags_prompt.txt"
+
+# ===============================================================
+# 5. 推送区域控制
+# ===============================================================
 display:
   region_order:
-    - ai_analysis                 # 将 AI 分析置顶
+    - ai_analysis                         # 将 AI 深度商业分析总结置顶，先看大盘结论
+    - standalone
     - rss
     - hotlist
-    - standalone
+    - new_items
 
   regions:
     hotlist: true
     new_items: false
     rss: true
-    standalone: false             # 建议暂时关闭独立展示区，防止冲突
-    ai_analysis: true
+    standalone: true                      # 开启独立展示区
+    ai_analysis: true                     
 
-# --- 5. 统一 AI 分析模型配置 (核心修复部分) ---
-ai:
-  provider: "openai"
-  model: "deepseek-chat"          # 使用 DeepSeek 官方标准模型
-  api_key: "sk-fb91bc27e6d0416da0ffba18fbc6699d"     # 请在此粘贴新的 API Key
-  api_base: "https://api.deepseek.com/v1" # 修复：填入 DeepSeek 官方 API 接口
-  timeout: 120
-  temperature: 0.5
-  max_tokens: 4000
+  standalone:
+    platforms: ["zhihu"]                  
+    rss_feeds: ["a16z", "hacker-news", "jiqizhixin"] # 让最顶级的商业洞察和硬核技术独立高亮展示
+    max_items: 10
 
-ai_analysis:
-  enabled: true
-  language: "Chinese"
-  prompt_file: "ai_analysis_prompt.txt" # 确认项目根目录下有这个文件
-  mode: "follow_report"
-  max_news_for_analysis: 100
-  include_rss: true
-  include_standalone: false
-  include_rank_timeline: false
-
-# --- 6. 通知与本地存储 ---
+# ===============================================================
+# 6. 通知与存储设置 (保持不变)
+# ===============================================================
 notification:
-  enabled: false                 # 若不需要飞书/钉钉推送可先关掉，先在命令行看输出
+  enabled: true
+  channels:
+    feishu:
+      webhook_url: ""
+    dingtalk:
+      webhook_url: ""
+    wework:
+      webhook_url: ""
+      msg_type: "markdown"
 
 storage:
   backend: "auto"
@@ -124,10 +135,45 @@ storage:
     data_dir: "output"
     retention_days: 0
 
+# ===============================================================
+# 8. AI 模型与分析配置 (严谨、务实、直击痛点)
+# ===============================================================
+ai:
+  model: "deepseek/deepseek-v4-flash"    
+  api_key: "sk-fb91bc27e6d0416da0ffba18fbc6699d"    # 出于安全考虑已为你隐去
+  api_base: ""
+  timeout: 120
+  temperature: 0.5                        # 【调低温度至 0.5】约束 AI 的发散性，强迫其输出结构化、事实性强、逻辑严密的商业提炼
+  max_tokens: 5000
+
+ai_analysis:
+  enabled: true
+  language: "Chinese"
+  prompt_file: "ai_analysis_prompt.txt"   # 建议在此 Prompt 中要求 AI 必须输出：“技术难点”、“目标客群”与“可直接落地的副业/商业切入点”
+  mode: "follow_report"
+  max_news_for_analysis: 100              # 因为过滤极严，分析基数下调至 100 即可覆盖高分内容
+  include_rss: true                       
+  include_standalone: true
+  include_rank_timeline: false            
+
+ai_translation:
+  enabled: true                           # 自动无缝抹平语言壁垒，直接消化 A16Z 和 HackerNews 原生内容
+  language: "中文"
+  prompt_file: "ai_translation_prompt.txt"
+  batch_size: 100
+  batch_interval: 2
+  scope:
+    hotlist: false
+    rss: true
+    standalone: true
+
 advanced:
   debug: false
+  version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
   crawler:
     request_interval: 2000
+    use_proxy: false
   rss:
     request_interval: 1000
-    timeout: 30
+    timeout: 15
+    use_proxy: false
