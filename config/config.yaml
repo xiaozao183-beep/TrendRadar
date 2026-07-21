@@ -1,90 +1,93 @@
-# ═══════════════════════════════════════════════════════════════
-#                   TrendRadar 配置文件 (极客与 AI 商业探勘专版)
-# ═══════════════════════════════════════════════════════════════
-
-app:
-  timezone: "Asia/Shanghai"
-  show_version_update: true
-
-schedule:
-  enabled: false
-  preset: "morning_evening"
-
 # ===============================================================
-# 2. 数据源 - 热榜平台 (聚焦深度研讨与宏观资金流向)
+# TrendRadar 配置文件 (AI提效与实操变现定制版)
 # ===============================================================
+
+# --- 1. AI 分析模型配置 ---
+ai_analysis:
+  enabled: true
+  provider: "openai"              # 使用 DeepSeek 或 OpenAI 兼容接口
+  model: "deepseek-chat"          # 可更换为你使用的模型名称
+  api_key: "YOUR_API_KEY_HERE"    # 请替换为你的 API Key (注意不要包含中文引号)
+  api_base: "https://api.deepseek.com/v1"
+  language: "zh-CN"
+  include_rss: true              # 必须开启：AI 将深度分析 RSS 干货
+  include_standalone: false       # 关闭独立展示区，减少不必要的 token 消耗与噪声
+
+# --- 2. 平台热榜数据源 (仅保留高信噪比商业/科技源) ---
 platforms:
   enabled: true
-  api_url: "" 
   sources:
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com" # 关注宏观大环境、美股 AI 巨头财报与算力基建资金流向
+      expected_domain: "wallstreetcn.com" # 用于观察 AI 产业资本与商业化落地方向
 
-# ===============================================================
-# 3. 数据源 - RSS 订阅 (只保留高信任度、高商业价值的全球顶级源)
-# ===============================================================
+# --- 3. RSS 精准订阅源 (聚焦：AI提效、工作流、独立开发、赚钱案例) ---
 rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 2                       # 保持 48 小时内的极速商业嗅觉
+    max_age_days: 3              # 过滤 3 天内的最新干货
 
   feeds:
-      # --- 1. 国内产业与科技深度 (砍掉泛新闻，专注硬核产业与商业) ---
+    # --- 【AI 工作流 & 提效工具类】---
+    - id: "sspai"
+      name: "少数派"
+      url: "https://sspai.com/feed" # 专注于 AI 效率工具、工作流（Dify/Coze/Prompt）搭建实操
+
     - id: "jiqizhixin"
       name: "机器之心"
-      url: "https://www.jiqizhixin.com/rss" # 国内权威 AI 垂直媒体，涵盖大模型突破与硬核落地
+      url: "https://www.jiqizhixin.com/rss" # 最新 AI 工具、开源代码与工程落地
 
-    - id: "jazzyear"
-      name: "甲子光年"
-      url: "https://rsshub.app/jazzyear/article" # 专注科技产业融合、企业智能化转型与深度研报
+    # --- 【独立开发、副业接单与变现讨论】---
+    - id: "v2ex-creative"
+      name: "V2EX-创意与独立开发"
+      url: "https://rsshub.app/v2ex/tab/creative" # 程序员分享自己做的小工具、AI变现尝试与接单案例
 
-    - id: "latepost"
-      name: "晚点 LatePost"
-      url: "https://rsshub.app/latepost/1"   # 科技大厂战术拆解、商业模式深度复盘
+    - id: "v2ex-tech"
+      name: "V2EX-技术与AI"
+      url: "https://rsshub.app/v2ex/tab/tech" # 真实开发者的 AI 提效工具踩坑与实战经验
 
-    # --- 2. 全球顶级风投、研报与极客变现 (海外硬核源) ---
-    - id: "a16z"
-      name: "A16Z Tech/AI"
-      url: "https://a16z.com/feed/"         # 全球顶级风投 A16Z 研报，AI 商业化与创业风向标
-
-    - id: "hacker-news"
-      name: "Hacker News"
-      url: "https://hnrss.org/frontpage"    # 硅谷工程师大本营，捕捉早期开源项目与技术变现弱信号
-
+    # --- 【全球 AI 开源项目与商业化弱信号】---
     - id: "github-trending"
       name: "GitHub Trending"
-      url: "https://rsshub.app/github/trending/daily/any" # 随时捕捉全球开发者正在关注的 AI 微型工具与轮子
+      url: "https://rsshub.app/github/trending/daily/any" # 全球开发者正在做的 AI 微型工具/轮子
 
-# ===============================================================
-# 4. 报告模式与展示控制
-# ===============================================================
+    - id: "hacker-news-ai"
+      name: "Hacker News (AI)"
+      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent" # 硅谷工程师关于 AI 自动化与商业化的实操讨论
+
+# --- 4. 强制关键词过滤 (过滤一切吃瓜新闻，只留硬核干货) ---
 report:
   mode: "current"
-  display_mode: "keyword"
+  display_mode: "keyword"         # 开启关键词匹配模式
   keywords:
-    - "AI"
-    - "大模型"
-    - "开源"
-    - "架构"
-    - "芯片"
-    - "商业化"
-    - "研报"
+    # 维度 A：AI 提效与工程实操
+    - "提效"
+    - "工作流"
+    - "Agent"
+    - "Dify"
+    - "Coze"
+    - "RAG"
+    - "知识库"
+    - "自动化"
+    - "Copilot"
+    - "代码"
+    - "Prompt"
+    - "脚本"
+    
+    # 维度 B：AI 落地变现与商业机会
+    - "变现"
+    - "副业"
+    - "独立开发"
+    - "接单"
     - "工具"
-    - "汽车"
-filter:
-  method: "ai"                            # 彻底屏蔽“震惊体”和无落地价值的水文
-  priority_sort_enabled: true
+    - "商业化"
+    - "付费"
+    - "案例"
+    - "赚钱"
+    - "开源项目"
 
-ai_filter:
-  batch_size: 200
-  batch_interval: 2
-  min_score: 0.80                         # 【调高阈值至 0.80】极致的宁缺毋滥，只留下具备真实商业价值或技术突破的信息
-  reclassify_threshold: 0.75
-  prompt_file: "prompt.txt"
-  extract_prompt_file: "extract_prompt.txt"
-  update_tags_prompt_file: "update_tags_prompt.txt"
+
 
 # ===============================================================
 # 5. 推送区域控制
