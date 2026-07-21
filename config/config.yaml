@@ -21,10 +21,6 @@ platforms:
       name: "华尔街见闻"
       expected_domain: "wallstreetcn.com" # 关注宏观大环境、美股 AI 巨头财报与算力基建资金流向
 
-    - id: "zhihu"
-      name: "知乎热榜"
-      expected_domain: "zhihu.com"        # 获取国内一线开发者关于大模型微调、RAG 落地实践的硬核探讨
-
 # ===============================================================
 # 3. 数据源 - RSS 订阅 (只保留高信任度、高商业价值的全球顶级源)
 # ===============================================================
@@ -35,35 +31,31 @@ rss:
     max_age_days: 2                       # 保持 48 小时内的极速商业嗅觉
 
   feeds:
-    # --- 国内高信任度 AI 垂直与商业媒体 ---
+      # --- 1. 国内产业与科技深度 (砍掉泛新闻，专注硬核产业与商业) ---
     - id: "jiqizhixin"
       name: "机器之心"
-      url: "https://www.jiqizhixin.com/rss" # 国内权威 AI 媒体：前沿论文解读、硬核技术拆解、大厂落地案例
-      
-    - id: "geekpark"
-      name: "极客公园"
-      url: "https://www.geekpark.net/rss"   # 聚焦 AI 产品经理视角与科技商业逻辑，适合挖掘用户痛点
-      
-    - id: "36kr-rss"
-      name: "36氪资讯"
-      url: "https://36kr.com/feed"          # 关注国内 AI 创投融资事件，看热钱往哪些垂直赛道流
+      url: "https://www.jiqizhixin.com/rss" # 国内权威 AI 垂直媒体，涵盖大模型突破与硬核落地
 
-    # --- 全球顶级技术前沿与核心资本风向 (权重拉满，原生直连) ---
-    - id: "techcrunch"
-      name: "TechCrunch AI"
-      url: "https://techcrunch.com/category/artificial-intelligence/feed/" # 修正为专属 AI 频道，直击海外真金白银的 SaaS 与 AI 融资现场
+    - id: "jazzyear"
+      name: "甲子光年"
+      url: "https://rsshub.app/jazzyear/article" # 专注科技产业融合、企业智能化转型与深度研报
+
+    - id: "latepost"
+      name: "晚点 LatePost"
+      url: "https://rsshub.app/latepost/1"   # 科技大厂战术拆解、商业模式深度复盘
+
+    # --- 2. 全球顶级风投、研报与极客变现 (海外硬核源) ---
+    - id: "a16z"
+      name: "A16Z Tech/AI"
+      url: "https://a16z.com/feed/"         # 全球顶级风投 A16Z 研报，AI 商业化与创业风向标
 
     - id: "hacker-news"
       name: "Hacker News"
-      url: "https://hnrss.org/frontpage"    # 硅谷极客大本营，过滤出 GitHub 高 Star 开源项目与工程落地的真实反馈
-      
-    - id: "a16z"
-      name: "Andreessen Horowitz"
-      url: "https://a16z.com/feed/"         # (新增) 全球顶级风投 A16Z 的深度研报，洞察未来 3-5 年的 AI 结构性机会
-      
-    - id: "openai-blog"
-      name: "OpenAI Blog"
-      url: "https://openai.com/blog/rss.xml" # (新增) 紧盯绝对的技术前沿发版与最佳实践
+      url: "https://hnrss.org/frontpage"    # 硅谷工程师大本营，捕捉早期开源项目与技术变现弱信号
+
+    - id: "github-trending"
+      name: "GitHub Trending"
+      url: "https://rsshub.app/github/trending/daily/any" # 随时捕捉全球开发者正在关注的 AI 微型工具与轮子
 
 # ===============================================================
 # 4. 报告模式与展示控制
@@ -71,10 +63,16 @@ rss:
 report:
   mode: "current"
   display_mode: "keyword"
-  sort_by_position_first: false
-  rank_threshold: 5
-  max_news_per_keyword: 0
-
+  keywords:
+    - "AI"
+    - "大模型"
+    - "开源"
+    - "架构"
+    - "芯片"
+    - "商业化"
+    - "研报"
+    - "工具"
+    - "汽车"
 filter:
   method: "ai"                            # 彻底屏蔽“震惊体”和无落地价值的水文
   priority_sort_enabled: true
