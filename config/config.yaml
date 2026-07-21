@@ -130,4 +130,4 @@ advanced:
     request_interval: 2000
   rss:
     request_interval: 1000
-    timeout: 15
+    timeout: 30
