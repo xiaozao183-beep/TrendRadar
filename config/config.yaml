@@ -38,40 +38,56 @@ rss:
       name: "机器之心"
       url: "https://www.jiqizhixin.com/rss" # 国内权威 AI 媒体：前沿论文解读、硬核技术拆解、大厂落地案例
       
-    - id: "geekpark"
-      name: "极客公园"
-      url: "https://www.geekpark.net/rss"   # 聚焦 AI 产品经理视角与科技商业逻辑，适合挖掘用户痛点
-      
-    - id: "36kr-rss"
-      name: "36氪资讯"
-      url: "https://36kr.com/feed"          # 关注国内 AI 创投融资事件，看热钱往哪些垂直赛道流
+    # --- 【独立开发、程序员真实接单与变现讨论】---
+    - id: "v2ex-creative"
+      name: "V2EX-创意与独立开发"
+      url: "https://rsshub.app/v2ex/tab/creative"
 
-    # --- 全球顶级技术前沿与核心资本风向 (权重拉满，原生直连) ---
-    - id: "techcrunch"
-      name: "TechCrunch AI"
-      url: "https://techcrunch.com/category/artificial-intelligence/feed/" # 修正为专属 AI 频道，直击海外真金白银的 SaaS 与 AI 融资现场
+    - id: "v2ex-tech"
+      name: "V2EX-技术与AI"
+      url: "https://rsshub.app/v2ex/tab/tech"
+      
+# --- 【全球开源项目与微型工具变现弱信号】---
+    - id: "github-trending"
+      name: "GitHub Trending"
+      url: "https://rsshub.app/github/trending/daily/any"
 
-    - id: "hacker-news"
-      name: "Hacker News"
-      url: "https://hnrss.org/frontpage"    # 硅谷极客大本营，过滤出 GitHub 高 Star 开源项目与工程落地的真实反馈
-      
-    - id: "a16z"
-      name: "Andreessen Horowitz"
-      url: "https://a16z.com/feed/"         # (新增) 全球顶级风投 A16Z 的深度研报，洞察未来 3-5 年的 AI 结构性机会
-      
-    - id: "openai-blog"
-      name: "OpenAI Blog"
-      url: "https://openai.com/blog/rss.xml" # (新增) 紧盯绝对的技术前沿发版与最佳实践
+    - id: "hacker-news-ai"
+      name: "Hacker News (AI)"
+      url: "https://hnrss.org/newest?q=AI+OR+LLM+OR+Agent"
 
 # ===============================================================
 # 4. 报告模式与展示控制
 # ===============================================================
+# --- 3. 强制关键词过滤 (彻底阻断八卦新闻与宏观炒作) ---
 report:
   mode: "current"
   display_mode: "keyword"
-  sort_by_position_first: false
-  rank_threshold: 5
-  max_news_per_keyword: 0
+  keywords:
+    - "AI"
+    - "LLM"
+    - "Agent"
+    - "提效"
+    - "工作流"
+    - "Dify"
+    - "Coze"
+    - "RAG"
+    - "知识库"
+    - "自动化"
+    - "Copilot"
+    - "代码"
+    - "Prompt"
+    - "脚本"
+    - "变现"
+    - "副业"
+    - "独立开发"
+    - "接单"
+    - "工具"
+    - "商业化"
+    - "付费"
+    - "案例"
+    - "赚钱"
+    - "开源"
 
 filter:
   method: "ai"                            # 彻底屏蔽“震惊体”和无落地价值的水文
@@ -89,13 +105,12 @@ ai_filter:
 # ===============================================================
 # 5. 推送区域控制
 # ===============================================================
+# --- 4. 推送与区域控制 ---
 display:
   region_order:
-    - ai_analysis                         # 将 AI 深度商业分析总结置顶，先看大盘结论
-    - standalone
+    - ai_analysis                 # 置顶 AI 深度提炼报告
     - rss
     - hotlist
-    - new_items
 
   regions:
     hotlist: true
@@ -103,11 +118,6 @@ display:
     rss: true
     standalone: true                      # 开启独立展示区
     ai_analysis: true                     
-
-  standalone:
-    platforms: ["zhihu"]                  
-    rss_feeds: ["a16z", "hacker-news", "jiqizhixin"] # 让最顶级的商业洞察和硬核技术独立高亮展示
-    max_items: 10
 
 # ===============================================================
 # 6. 通知与存储设置 (保持不变)
@@ -141,8 +151,8 @@ ai:
   api_key: "sk-fb91bc27e6d0416da0ffba18fbc6699d"    # 出于安全考虑已为你隐去
   api_base: ""
   timeout: 120
-  temperature: 0.5                        # 【调低温度至 0.5】约束 AI 的发散性，强迫其输出结构化、事实性强、逻辑严密的商业提炼
-  max_tokens: 5000
+  temperature: 0.3                        # 【调低温度至 0.5】约束 AI 的发散性，强迫其输出结构化、事实性强、逻辑严密的商业提炼
+  max_tokens: 4000
 
 ai_analysis:
   enabled: true
