@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════
-#                    TrendRadar 配置文件 (AI 精准聚焦版)
+#                    TrendRadar 配置文件 (深度 AI 商业与落地版)
 # ═══════════════════════════════════════════════════════════════
 
 app:
@@ -11,67 +11,63 @@ schedule:
   preset: "morning_evening"
 
 # ===============================================================
-# 2. 数据源 - 热榜平台 (已修复 36kr/huxiu 报错，并补充 AI 高价值源)
+# 2. 数据源 - 热榜平台 (60% 国内权重，主打深度调研与可信平台)
 # ===============================================================
 platforms:
   enabled: true
-  api_url: "" # 留空使用默认公共 API，也可填写自建地址
+  api_url: "" 
   sources:
+    - id: "36kr"
+      name: "36氪热榜"
+      # expected_domain: "36kr.com"       # 【核心保障】注销强域名校验，确保转链和API防盗链机制下仍能100%稳定拉取创投和AI深度分析
+      
+    - id: "huxiu"
+      name: "虎嗅网"
+      # expected_domain: "huxiu.com"      # 注销强校验，聚焦前沿科技商业化、AI 行业大视野与落地困境分析
+
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
-      expected_domain: "wallstreetcn.com" # 顶级商业宏观、AI独角兽估值与资本动向
-
-    - id: "cls-hot"
-      name: "财联社热门"
-      expected_domain: "cls.cn"           # A股及芯片/算力产业链、政策第一手消息
+      expected_domain: "wallstreetcn.com" # 追踪 AI 独角兽估值、半导体供应链宏观资本动向
 
     - id: "zhihu"
       name: "知乎热榜"
-      expected_domain: "zhihu.com"        # 前沿 AI 技术大模型架构、底层算法深度讨论
-
-    - id: "36kr"
-      name: "36氪热榜"
-      # expected_domain: "36kr.com"       # 【修复报错】已移除强域名校验，避免公共转链触发报错，确保稳定拉取
-
-    - id: "huxiu"
-      name: "虎嗅网"
-      # expected_domain: "huxiu.com"      # 【修复报错】已移除强域名校验，保证深度 AI 商业应用文章正常读取
+      expected_domain: "zhihu.com"        # 获取国内一线开发者关于大模型架构、底层代码逻辑的深度探讨与硬核分享
 
     - id: "thepaper"
       name: "澎湃新闻"
-      expected_domain: "thepaper.cn"     # 权威科技政策、人工智能+行动红利解读
+      expected_domain: "thepaper.cn"      # 权威背书，追踪“人工智能+”国家级政策、算力基建招标等明确的政企落地信号
 
 # ===============================================================
-# 3. 数据源 - RSS 订阅 (精选全球顶级、链接 100% 直连可达的权威 AI 媒体)
+# 3. 数据源 - RSS 订阅 (补充国内顶级 AI 垂直媒体与海外硬核技术源)
 # ===============================================================
 rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 2                       # 只看 2 天内最新的 AI 产业动态
+    max_age_days: 2                       # 保证时效，聚焦48小时内高价值产业动态
 
   feeds:
-    # --- 国内权威 AI 科技与创投媒体 ---
+    # --- 国内硬核 AI 科技与商业媒体 (补充占比) ---
+    - id: "jiqizhixin"
+      name: "机器之心"
+      url: "https://www.jiqizhixin.com/rss" # 国内最权威的 AI 垂直媒体，涵盖大模型前沿论文、硬核技术拆解与产业落地案例
+      
+    - id: "geekpark"
+      name: "极客公园"
+      url: "https://www.geekpark.net/rss"   # 聚焦科技商业逻辑与 AI 产品经理视角，适合挖掘痛点和变现场景
+
     - id: "sspai"
       name: "少数派"
-      url: "https://sspai.com/feed"       # AI 原生应用、效率工具变现
+      url: "https://sspai.com/feed"         # 关注 AI 效率工具、独立开发者的轻量级变现与提效经验分享
 
-    - id: "ifanr"
-      name: "爱范儿"
-      url: "https://www.ifanr.com/feed"   # 大模型落地应用与智能硬件趋势
-
-    # --- 全球顶级科技与 AI 产业巨头 (原生直连，绝无失效链接) ---
+    # --- 全球顶级科技与核心技术前沿 (40% 海外权重，原生直连) ---
     - id: "techcrunch"
       name: "TechCrunch Startups/AI"
-      url: "https://techcrunch.com/feed/" # 全球 AI 初创公司融融资与大模型发布第一现场
+      url: "https://techcrunch.com/feed/"   # 全球 AI 商业模式验证的第一现场，直接追踪海外哪些应用正在获得真金白银的融资
 
     - id: "hacker-news"
       name: "Hacker News"
-      url: "https://hnrss.org/frontpage"  # 全球底层 AI 开发者与技术突破核心讨论源
-
-    - id: "ars-technica"
-      name: "Ars Technica"
-      url: "https://feeds.arstechnica.com/arstechnica/technology-lab" # 深度技术剖析、芯片架构与 AI 政策监管
+      url: "https://hnrss.org/frontpage"    # 硅谷极客最前沿讨论，过滤出底层算法与工程化落地的真实反馈
 
 # ===============================================================
 # 4. 报告模式与展示控制
@@ -84,14 +80,14 @@ report:
   max_news_per_keyword: 0
 
 filter:
-  method: "ai"                            # 使用 AI 进行语义识别，确保只抓取有实质价值的 AI 新闻
+  method: "ai"                            # 强依赖 AI 语义识别，彻底屏蔽“震惊体”和无商业价值的水文
   priority_sort_enabled: true
 
 ai_filter:
   batch_size: 200
   batch_interval: 2
-  min_score: 0.6                          # 设定阈值，自动过滤毫无价值的营销号垃圾资讯
-  reclassify_threshold: 0.6
+  min_score: 0.75                         # 【调高阈值】从 0.6 提升至 0.75，宁缺毋滥，只看高质量的市场调研与落地案例
+  reclassify_threshold: 0.7
   prompt_file: "prompt.txt"
   extract_prompt_file: "extract_prompt.txt"
   update_tags_prompt_file: "update_tags_prompt.txt"
@@ -110,13 +106,13 @@ display:
   regions:
     hotlist: true
     new_items: false
-    rss: true                             # 开启 RSS AI 分析
+    rss: true
     standalone: false
     ai_analysis: true                     # 开启 AI 深度商业分析总结
 
   standalone:
-    platforms: ["zhihu", "wallstreetcn-hot"]
-    rss_feeds: ["techcrunch"]
+    platforms: ["36kr", "zhihu"]          # 独立展示区优先保障 36氪的深度文章和知乎的硬核技术分享
+    rss_feeds: ["jiqizhixin", "techcrunch"]
     max_items: 15
 
 # ===============================================================
@@ -147,11 +143,11 @@ storage:
 # 8. AI 模型与分析配置 (全量联动 AI，提炼商业机会)
 # ===============================================================
 ai:
-  model: "deepseek/deepseek-v4-flash"    # 使用 DeepSeek 进行性价比极高的大模型分析
+  model: "deepseek/deepseek-v4-flash"    
   api_key: "sk-9715dc693a35494e8fe0659532e9e477"
   api_base: ""
   timeout: 120
-  temperature: 1.0
+  temperature: 0.7                        # 【调低温度】从 1.0 降至 0.7，让 AI 生成的分析更加严谨、客观，适合市场调研报告的口吻
   max_tokens: 5000
 
 ai_analysis:
@@ -160,12 +156,12 @@ ai_analysis:
   prompt_file: "ai_analysis_prompt.txt"
   mode: "follow_report"
   max_news_for_analysis: 150
-  include_rss: true                       # 【关键】将 TechCrunch、少数派等 RSS 中的 AI 深度文章一并喂给 AI 分析
+  include_rss: true                       
   include_standalone: true
-  include_rank_timeline: false           # 关闭轨迹跟踪，大幅降低 Token 消耗
+  include_rank_timeline: false           
 
 ai_translation:
-  enabled: true                           # 开启自动翻译，实时将 TechCrunch / HackerNews 等英文源翻译为中文
+  enabled: true                           # 自动无缝抹平语言壁垒，直接获取 TechCrunch/HackerNews 第一手英文原版的底层逻辑与商业模式，无需手动查词典
   language: "中文"
   prompt_file: "ai_translation_prompt.txt"
   batch_size: 100
